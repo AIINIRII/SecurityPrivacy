@@ -1,0 +1,4 @@
+# Project exclude paths
+/cache/
+/securityprivacy-main/target/
+/securityprivacy-util/target/

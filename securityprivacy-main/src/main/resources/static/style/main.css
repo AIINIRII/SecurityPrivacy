@@ -1,0 +1,58 @@
+.main {
+    padding: 5% 5%;
+}
+
+h1 {
+    text-align: center;
+}
+
+h2 {
+    text-align: center;
+}
+
+.content {
+    margin-top: 40px;
+    padding: 40px;
+    min-height: 200px;
+}
+
+.tab-content {
+    background-color: rgba(51, 50, 50, 0.04);
+    border-radius: 8px;
+    min-height: 400px;
+}
+
+.tab-pane {
+    padding: 20px 80px;
+}
+
+.input-row {
+    margin-top: 40px;
+}
+
+.input-label {
+    padding-top: 5px;
+    text-align: right;
+    font-size: large;
+    font-weight: bold;
+}
+
+.form-check {
+    padding-top: 8px;
+}
+
+#download-filename {
+    text-align: right;
+    padding-top: 8px;
+}
+
+.divider{
+    border-top: rgba(0, 0, 0, 0.2) 1px solid;
+    height: 1px;
+    margin-top: 40px;
+}
+
+.float-right{
+    float: right;
+    font-size: small;
+}

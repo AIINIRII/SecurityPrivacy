@@ -1,0 +1,12 @@
+spring:
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    encoding: UTF-8
+    suffix: .html
+    mode: HTML
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 1000MB
+downloadFilePath: ".\\cache\\"
