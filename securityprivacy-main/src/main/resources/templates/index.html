@@ -9,7 +9,7 @@
 </head>
 <body>
 <div class="container main">
-    <h1>Security And Privacy Assignment 1</h1>
+    <h1>Security And Privacy Assignment 2</h1>
     <h2>DES encrypt and decrypt</h2>
     <div class="content">
         <nav>
@@ -20,6 +20,17 @@
                 <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile"
                         type="button" role="tab" aria-controls="nav-profile" aria-selected="false">String encrypt &
                     decrypt
+                </button>
+                <button class="nav-link" id="nav-test-tab" data-bs-toggle="tab" data-bs-target="#nav-test"
+                        type="button" role="tab" aria-controls="nav-test" aria-selected="false">Evaluate DES vs AES
+                </button>
+                <button class="nav-link" id="nav-test-rsa-tab" data-bs-toggle="tab" data-bs-target="#nav-test-rsa"
+                        type="button" role="tab" aria-controls="nav-test-rsa" aria-selected="false">Evaluate DES vs AES
+                    vs RSA
+                </button>
+                <button class="nav-link" id="nav-test-multi-tab" data-bs-toggle="tab" data-bs-target="#nav-test-multi"
+                        type="button" role="tab" aria-controls="nav-test-multi" aria-selected="false">Evaluate DES vs
+                    AES vs RSA in Multiple Times
                 </button>
             </div>
         </nav>
@@ -140,6 +151,77 @@
                     </div>
                 </div>
             </div>
+            <div class="tab-pane fade" id="nav-test" role="tabpanel" aria-labelledby="nav-test-tab">
+                <div class="container">
+                    <div class="row input-row">
+                        In this part, we will use 1GB files to compare AES and DES algorithms. This experiment will also
+                        compare the efficiency of each algorithm in different modes.
+                    </div>
+                    <div class="divider"></div>
+                    <div class="row input-row">
+                        <div class="col-4">
+                            Click This button to start test:
+                        </div>
+                        <div class="col-4">
+                            <button id="testButton" class="btn btn-primary" onclick="startTest()">Test</button>
+                        </div>
+                    </div>
+
+                    <div class="row input-row">
+                        <div style="white-space: pre-wrap;" id="desResult"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="nav-test-rsa" role="tabpanel" aria-labelledby="nav-test-rsa-tab">
+                <div class="container">
+                    <div class="row input-row">
+                        <div class="row input-row">
+                            In this part, we will use a short paragraph to compare AES, DES and RSA algorithms. This
+                            experiment will also compare the efficiency of each algorithm in different modes.
+                        </div>
+                        <div class="divider"></div>
+                        <div class="row input-row">
+                            <div class="col-4">
+                                Click This button to start test:
+                            </div>
+                            <div class="col-4">
+                                <button id="testButtonRSA" class="btn btn-primary" onclick="startTestRSA()">Test
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="row input-row">
+                            <div style="white-space: pre-wrap;" id="rsaResult"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="nav-test-multi" role="tabpanel" aria-labelledby="nav-test-multi-tab">
+                <div class="container">
+                    <div class="row input-row">
+                        <div class="row input-row">
+                            In this part, we will use a short paragraph to compare AES, DES and RSA algorithms in
+                            multiple times. This
+                            experiment will also compare the efficiency of each algorithm in when running multiple
+                            times.
+                        </div>
+                        <div class="divider"></div>
+                        <div class="row input-row">
+                            <div class="col-4">
+                                Click This button to start test:
+                            </div>
+                            <div class="col-4">
+                                <button id="testButtonMulti" class="btn btn-primary" onclick="startTestMulti()">Test
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="row input-row">
+                            <div style="white-space: pre-wrap;" id="multiResult"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -245,6 +327,114 @@
                 } else {
                     alert("上传失败:" + data);
                 }
+            },
+            //调用执行后调用的函数
+            complete: function (XMLHttpRequest, textStatus) {
+            },
+            //调用出错执行的函数
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.readyState + XMLHttpRequest.status + XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+    function startTest() {
+
+        let $desResult = $("#desResult");
+        let $testButton = $('#testButton');
+
+        $testButton.prop("disabled", true);
+        $testButton.text("Testing..");
+
+        $.ajax({
+            type: "POST",
+            url: "/decryptTestFile",
+            enctype: 'multipart/form-data',
+            async: true,
+            //返回数据的格式
+            datatype: "text",//"xml", "html", "script", "json", "jsonp", "text".
+            processData: false,
+            contentType: false,
+            //成功返回之后调用的函数
+            success: function (data) {
+                filename = data
+                if (data !== null) {
+                    $desResult.text(data)
+                }
+                $testButton.prop("disabled", false);
+                $testButton.text("Test");
+            },
+            //调用执行后调用的函数
+            complete: function (XMLHttpRequest, textStatus) {
+            },
+            //调用出错执行的函数
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.readyState + XMLHttpRequest.status + XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+    function startTestRSA() {
+
+        let $rsaResult = $("#rsaResult");
+        let $testButton = $('#testButtonRSA');
+
+        $testButton.prop("disabled", true);
+        $testButton.text("Testing..");
+
+        $.ajax({
+            type: "POST",
+            url: "/decryptTestText",
+            enctype: 'multipart/form-data',
+            async: true,
+            //返回数据的格式
+            datatype: "text",//"xml", "html", "script", "json", "jsonp", "text".
+            processData: false,
+            contentType: false,
+            //成功返回之后调用的函数
+            success: function (data) {
+                filename = data
+                if (data !== null) {
+                    $rsaResult.html(data)
+                }
+                $testButton.prop("disabled", false);
+                $testButton.text("Test");
+            },
+            //调用执行后调用的函数
+            complete: function (XMLHttpRequest, textStatus) {
+            },
+            //调用出错执行的函数
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.readyState + XMLHttpRequest.status + XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+    function startTestMulti() {
+
+        let $multiResult = $("#multiResult");
+        let $testButton = $('#testButtonMulti');
+
+        $testButton.prop("disabled", true);
+        $testButton.text("Testing..");
+
+        $.ajax({
+            type: "POST",
+            url: "/decryptTestMulti",
+            enctype: 'multipart/form-data',
+            async: true,
+            //返回数据的格式
+            datatype: "text",//"xml", "html", "script", "json", "jsonp", "text".
+            processData: false,
+            contentType: false,
+            //成功返回之后调用的函数
+            success: function (data) {
+                filename = data
+                if (data !== null) {
+                    $multiResult.html(data)
+                }
+                $testButton.prop("disabled", false);
+                $testButton.text("Test");
             },
             //调用执行后调用的函数
             complete: function (XMLHttpRequest, textStatus) {
